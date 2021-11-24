@@ -14,7 +14,7 @@ int main(void)
     
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Pinche atracion", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -46,6 +46,8 @@ int main(void)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    const char* seasons[4] = { "Invierno", "Verano",
+                             "Otoño", "Primavera" };
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -71,18 +73,29 @@ int main(void)
         // Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets automatically appears in a window called "Debug".
         {
             static float f = 0.0f;
-            static int counter = 0;
-            ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f    
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+            static int numSeason= 1;
+            ImGui::Text("Pinche VGI!");                           // Display some text (you can use a format string too)
+            ImGui::SliderFloat("Velocidad", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f    
+            ImGui::SliderFloat3("Mover camara", &f ,0.0f, 960.0f); // Edit 3 floats representing a color
 
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
+         
+            ImGui::Checkbox("Dividir pantalla", &show_another_window);
+            
+            // no se como pitos declararlos con un for y lanzarlos con un swith o algo asi
 
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
+            if (ImGui::Button(seasons[0]))                          // Buttons return true when clicked (NB: most widgets return true when edited/activated)
+                numSeason = 0;
+            if (ImGui::Button(seasons[1]))
+                numSeason = 1;
+            if (ImGui::Button(seasons[2]))
+                numSeason = 2;
+            if (ImGui::Button(seasons[3]))
+                numSeason = 3;
+
+
+
+            //ImGui::SameLine();
+            //ImGui::Text("Estación actual", seasons[numSeason]);
 
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         }
